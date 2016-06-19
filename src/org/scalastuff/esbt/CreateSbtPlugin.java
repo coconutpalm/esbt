@@ -30,7 +30,7 @@ public class CreateSbtPlugin {
 	public static final File PLUGIN_HOME = Esbt.USER_HOME;
 	
 	public static void createSbtPlugin() throws IOException {
-		File pluginDir = new File(PLUGIN_HOME, ".sbt/plugins");
+		File pluginDir = new File(PLUGIN_HOME, ".sbt/0.13/plugins");
 		pluginDir.mkdirs();
 		createBuildSbt(pluginDir);
 		createSbtEclipsePluginFile(pluginDir);

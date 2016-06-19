@@ -29,6 +29,10 @@ One can issue an SBT command by choosing "SBT Command..." from the project conte
 
 # Release Notes
 
+## 0.12.0
+
+- Upgraded to sbt 0.13.11.
+
 ## 0.11.3
 
 - upgraded to sbt 0.11.1 
