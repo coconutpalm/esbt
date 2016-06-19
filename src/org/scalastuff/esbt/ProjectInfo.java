@@ -32,8 +32,6 @@ import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;
 import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 
 public class ProjectInfo {
@@ -230,59 +228,6 @@ public class ProjectInfo {
 //		renameProject();
 
 	}
-	
-	private void renameProject() throws CoreException, IOException {
-		String name = getProjectName();
-		if (!name.isEmpty() && !getOrganization().equals("default") && !getName().equals("default")) {
-			IProjectDescription desc = project.getProject().getDescription();
-			if (!desc.getName().equals(name)) {
-				
-//				// backup existing target folder
-				File newProjectDir = new File(getProjectDir().getParentFile(), name);
-//				for (int i = 0; i < 100 && newProjectDir.exists(); i++) {
-//					newProjectDir.renameTo(new File(newProjectDir.getPath() + ".old" + i));
-//				}
-//				
-				// rename folder on disk
-				if (getProjectDir().renameTo(newProjectDir)) {
-
-					// remove existing .project file
-					File projectFile = new File(newProjectDir, ".project");
-					projectFile.delete();
-
-					// create a new eclipse project
-					IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-					IProject newProject = root.getProject(name);
-					newProject.create(null);
-					newProject.open(null);
-					
-					// write .project file
-					desc.setName(name);
-					newProject.setDescription(desc, null);
-					
-					// remove current eclipse project
-					this.project.delete(true, null);
-
-					// move info file
-					File oldInfoFile = this.infoFile;
-					
-					// re-initialize needed
-					initialize(newProject);
-					
-					// copy old info file
-					Utils.copy(oldInfoFile, infoFile, true);
-				}
-			}
-		}
-	}
-
-	private String getProjectName() {
-	  if (getName().equals("") || getOrganization().equals("")) {
-	  	return getName();
-	  } else {
-				return getOrganization() + "." + getName();
-	  }
-  }
 
 	private Set<ProjectInfo> findProjectDependencies() {
 	  Set<ProjectInfo> projectDeps = new LinkedHashSet<ProjectInfo>();
