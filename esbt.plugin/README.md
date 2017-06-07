@@ -3,7 +3,7 @@ Eclipse SBT Plugin
 
 # Features:
 
-- Based on SBT 0.11.1
+- Based on SBT 0.13.11
 - automatically downloads dependencies using SBT
 - automatically updates eclipse project configuration
 - attaches sources of dependencies that have withSources()
